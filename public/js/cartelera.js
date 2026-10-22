@@ -34,9 +34,7 @@ function mostrarConciertos(listaConciertos) {
     return `
       <article class="tarjeta">
         <h2>${c.artista}</h2>
-        <p>📅 ${formatearFecha(c.fecha)}</p>
-        <p>📍 ${c.lugar}</p>
-        <p class="cupos">Cupos disponibles: <strong>${c.cuposDisponibles}</strong> de ${c.cupoTotal}</p>
+        ${datosConcierto(c)}
         ${accion}
       </article>`;
   }).join("");

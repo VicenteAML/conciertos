@@ -31,9 +31,16 @@ body {
   align-items: center;
   flex-wrap: wrap;
   gap: 10px;
-  padding: 20px 28px;
-  border-bottom: 1px solid var(--borde);
+  padding: 20px 28px 64px;
   background: var(--negro);
+}
+/* Onda decorativa de colores bajo el menú (imagen img/onda.svg) */
+.encabezado::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 6px;
+  height: 46px;
+  background: url("../img/onda.svg") center / 100% 100% no-repeat;
 }
 .logo {
   color: var(--blanco);
@@ -125,6 +132,27 @@ h1::after { content: "."; color: var(--rosa); } /* detalle rosa */
 }
 .tarjeta p { color: var(--gris); }
 .cupos strong { color: var(--amarillo); }
+
+/* Burbujas de información (fecha, hora, lugar, cupos) */
+.datos { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.dato {
+  background: #161616;
+  border: 1px solid var(--borde);
+  border-radius: 6px;
+  padding: 7px 10px;
+}
+.dato.ancho { grid-column: span 2; }   /* lugar ocupa toda la fila */
+.dato span {
+  display: block;
+  font-size: 0.68rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gris);
+  margin-bottom: 2px;
+}
+.dato strong { color: var(--blanco); font-weight: 600; font-size: 0.95rem; }
+.dato strong.amarillo { color: var(--amarillo); }
+.dato small { color: var(--gris); }
 
 /* ===== Botones y estados ===== */
 .boton {

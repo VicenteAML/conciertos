@@ -17,9 +17,7 @@ async function cargarConcierto() {
 
   detalle.innerHTML = `
     <h2>${c.artista}</h2>
-    <p>📅 ${formatearFecha(c.fecha)}</p>
-    <p>📍 ${c.lugar}</p>
-    <p class="cupos">Cupos disponibles: <strong>${c.cuposDisponibles}</strong></p>`;
+    ${datosConcierto(c)}`;
 }
 
 // 2. Al enviar: valida en la página y luego manda los datos al servidor

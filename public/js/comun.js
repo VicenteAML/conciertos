@@ -27,6 +27,20 @@ function formatearFecha(fechaTexto) {
   return new Date(fechaTexto).toLocaleString("es-CL", { dateStyle: "long", timeStyle: "short" });
 }
 
+// Arma las burbujas de información de un concierto (fecha, hora, lugar y cupos)
+function datosConcierto(c) {
+  const f = new Date(c.fecha);
+  const fecha = f.toLocaleDateString("es-CL", { day: "numeric", month: "short", year: "numeric" });
+  const hora = f.toLocaleTimeString("es-CL", { hour: "2-digit", minute: "2-digit" });
+  return `
+    <div class="datos">
+      <div class="dato"><span>Fecha</span><strong>${fecha}</strong></div>
+      <div class="dato"><span>Hora</span><strong>${hora}</strong></div>
+      <div class="dato ancho"><span>Lugar</span><strong>${c.lugar}</strong></div>
+      <div class="dato ancho"><span>Cupos disponibles</span><strong class="amarillo">${c.cuposDisponibles}</strong> <small>de ${c.cupoTotal}</small></div>
+    </div>`;
+}
+
 // Muestra un mensaje de color: tipo = "exito", "error" o "info"
 function mostrarMensaje(elemento, texto, tipo) {
   elemento.textContent = texto;
