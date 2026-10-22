@@ -31,17 +31,9 @@ body {
   align-items: center;
   flex-wrap: wrap;
   gap: 10px;
-  padding: 20px 28px 50px;
+  padding: 20px 28px;
+  border-bottom: 1px solid var(--borde);
   background: var(--negro);
-}
-/* Onda de sonido blanca, como la portada de AM */
-.encabezado::after {
-  content: "";
-  position: absolute;
-  left: 0; right: 0; bottom: 8px;
-  height: 30px;
-  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 30' preserveAspectRatio='none'><polyline fill='none' stroke='%23f5f5f5' stroke-width='1.2' points='0,15 20,15 26,15 30,4 34,26 38,9 42,21 46,15 70,15 76,15 80,2 84,28 88,6 92,24 96,15 130,15 136,15 140,8 144,22 148,15 200,15'/></svg>") center / 100% 100% no-repeat;
-  opacity: 0.85;
 }
 .logo {
   color: var(--blanco);
@@ -50,6 +42,14 @@ body {
   letter-spacing: 4px;
   text-transform: uppercase;
   text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.logo img {
+  height: 40px;   /* tamaño del logo: cámbialo si lo quieres más grande */
+  width: auto;
+  display: block;
 }
 .encabezado nav a {
   color: var(--gris);
