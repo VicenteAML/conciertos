@@ -1,0 +1,93 @@
+/* ===== Estilos generales (los usan las 3 páginas) ===== */
+:root {
+  --fondo: #12111a;
+  --tarjeta: #1e1c2b;
+  --texto: #f1f0f7;
+  --suave: #a9a6bd;
+  --principal: #8b5cf6;
+  --exito: #22c55e;
+  --error: #ef4444;
+  --info: #3b82f6;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: var(--fondo);
+  color: var(--texto);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Menú */
+.encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 16px 24px;
+  background: var(--tarjeta);
+  border-bottom: 2px solid var(--principal);
+}
+.logo { color: var(--texto); font-size: 1.3rem; font-weight: bold; text-decoration: none; }
+.encabezado nav a { color: var(--suave); text-decoration: none; margin-left: 18px; }
+.encabezado nav a:hover, .encabezado nav a.activo { color: var(--principal); }
+
+/* Contenido */
+.contenedor { width: 100%; max-width: 1100px; margin: 0 auto; padding: 30px 20px; flex: 1; }
+.contenedor.angosto { max-width: 600px; }
+h1 { margin-bottom: 8px; }
+.subtitulo { color: var(--suave); margin-bottom: 20px; }
+.volver { display: inline-block; color: var(--suave); margin-bottom: 15px; text-decoration: none; }
+
+.buscador {
+  width: 100%; padding: 12px; margin-bottom: 15px;
+  border-radius: 8px; border: 1px solid #3a3750;
+  background: var(--tarjeta); color: var(--texto); font-size: 1rem;
+}
+
+/* Tarjetas en grilla: se acomodan solas al ancho de la pantalla */
+.grilla { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
+.tarjeta { background: var(--tarjeta); border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+.grilla .tarjeta { margin-bottom: 0; display: flex; flex-direction: column; gap: 8px; }
+.tarjeta h2 { color: var(--principal); font-size: 1.3rem; }
+.tarjeta p { color: var(--suave); }
+.cupos strong { color: var(--texto); }
+
+/* Botones y estados */
+.boton {
+  display: inline-block; margin-top: auto; padding: 10px 16px;
+  background: var(--principal); color: white; border: none; border-radius: 8px;
+  text-align: center; text-decoration: none; font-size: 1rem; cursor: pointer;
+}
+.boton:hover { opacity: 0.85; }
+.boton:disabled { opacity: 0.5; cursor: wait; }
+.estado { margin-top: auto; padding: 10px; text-align: center; border-radius: 8px; background: #3a3750; color: var(--suave); }
+.estado.agotado { background: rgba(239, 68, 68, 0.2); color: var(--error); }
+.vacio { color: var(--suave); }
+
+/* Formulario */
+.formulario { display: flex; flex-direction: column; gap: 8px; }
+.formulario input {
+  padding: 12px; border-radius: 8px; border: 1px solid #3a3750;
+  background: var(--tarjeta); color: var(--texto); font-size: 1rem; margin-bottom: 8px;
+}
+.formulario .boton { margin-top: 10px; }
+
+/* Mensajes para el usuario */
+.mensaje { margin-top: 15px; padding: 12px; border-radius: 8px; }
+.mensaje.exito { background: rgba(34, 197, 94, 0.15); color: var(--exito); }
+.mensaje.error { background: rgba(239, 68, 68, 0.15); color: var(--error); }
+.mensaje.info  { background: rgba(59, 130, 246, 0.15); color: var(--info); margin: 0 0 15px; }
+
+.pie { text-align: center; padding: 20px; color: var(--suave); font-size: 0.9rem; }
+
+/* Celular */
+@media (max-width: 600px) {
+  .encabezado { flex-direction: column; }
+  .encabezado nav a { margin: 0 10px; }
+  h1 { font-size: 1.5rem; }
+}

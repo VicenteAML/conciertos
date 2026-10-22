@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cartelera | ConciertosYa</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <!-- Menú común a todas las páginas -->
+  <header class="encabezado">
+    <a class="logo" href="index.html">🎵 ConciertosYa</a>
+    <nav>
+      <a href="index.html" class="activo">Cartelera</a>
+      <a href="mis-inscripciones.html">Mis inscripciones</a>
+    </nav>
+  </header>
+
+  <main class="contenedor">
+    <h1>Cartelera de conciertos</h1>
+    <p class="subtitulo">Elige un concierto e inscríbete antes de que se agoten los cupos.</p>
+
+    <input id="buscador" class="buscador" type="text" placeholder="Buscar por artista o lugar...">
+    <p id="aviso"></p>
+
+    <!-- Aquí cartelera.js dibuja las tarjetas de conciertos -->
+    <section id="lista-conciertos" class="grilla">
+      <p class="vacio">Cargando conciertos...</p>
+    </section>
+  </main>
+
+  <footer class="pie">Proyecto Arquitectura de Sistemas · Inscripción a eventos</footer>
+
+  <script src="js/comun.js"></script>
+  <script src="js/cartelera.js"></script>
+</body>
+</html>

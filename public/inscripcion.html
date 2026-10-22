@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inscripción | ConciertosYa</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <header class="encabezado">
+    <a class="logo" href="index.html">🎵 ConciertosYa</a>
+    <nav>
+      <a href="index.html">Cartelera</a>
+      <a href="mis-inscripciones.html">Mis inscripciones</a>
+    </nav>
+  </header>
+
+  <main class="contenedor angosto">
+    <a class="volver" href="index.html">← Volver a la cartelera</a>
+    <h1>Inscripción</h1>
+
+    <!-- Datos del concierto elegido -->
+    <section id="detalle-concierto" class="tarjeta">Cargando concierto...</section>
+
+    <!-- Formulario: los "name" son los que se envían al servidor -->
+    <form id="form-inscripcion" class="formulario" novalidate>
+      <label for="nombre">Nombre completo</label>
+      <input id="nombre" name="nombre" type="text" placeholder="Ej: Ana Pérez">
+
+      <label for="rut">RUT</label>
+      <input id="rut" name="rut" type="text" placeholder="Ej: 12345678-9">
+
+      <label for="correo">Correo</label>
+      <input id="correo" name="correo" type="email" placeholder="Ej: ana@mail.com">
+
+      <button type="submit" class="boton">Confirmar inscripción</button>
+    </form>
+
+    <p id="mensaje"></p>
+  </main>
+
+  <footer class="pie">Proyecto Arquitectura de Sistemas · Inscripción a eventos</footer>
+
+  <script src="js/comun.js"></script>
+  <script src="js/inscripcion.js"></script>
+</body>
+</html>
