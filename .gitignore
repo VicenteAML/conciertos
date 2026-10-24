@@ -1,0 +1,10 @@
+node_modules/
+backend/secrets/
+.env
+.env.*
+!.env.example
+firebase-debug.log*
+firestore-debug.log*
+service-account*.json
+serviceAccount*.json
+*-firebase-adminsdk-*.json

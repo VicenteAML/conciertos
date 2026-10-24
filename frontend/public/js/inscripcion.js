@@ -33,7 +33,7 @@ formulario.addEventListener("submit", async (evento) => {
     return mostrarMensaje(mensaje, "Completa todos los campos.", "error");
   }
   if (!/^\d{7,8}-[\dkK]$/.test(rut)) {
-    return mostrarMensaje(mensaje, "Ingresa el RUT sin puntos y con guion (ej: 12345678-9).", "error");
+    return mostrarMensaje(mensaje, "Ingresa el RUT sin puntos y con guion (ej: 12345678-5).", "error");
   }
   if (!/^\S+@\S+\.\S+$/.test(correo)) {
     return mostrarMensaje(mensaje, "Ingresa un correo válido.", "error");

@@ -1,0 +1,18 @@
+{
+  "name": "conciertos",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Cartelera e inscripciones con Express y Firestore",
+  "scripts": {
+    "start": "node backend/src/server.js",
+    "dev": "node --watch backend/src/server.js",
+    "check:firestore": "node backend/scripts/check-firestore.js",
+    "seed:conciertos": "node backend/scripts/seed-conciertos.js",
+    "test": "node --test backend/test"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.3.0",
+    "firebase-admin": "^13.10.0"
+  }
+}

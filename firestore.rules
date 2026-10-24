@@ -1,0 +1,9 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // El navegador usa la API. Firebase Admin accede mediante IAM.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
