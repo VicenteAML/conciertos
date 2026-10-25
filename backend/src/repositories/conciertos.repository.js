@@ -63,4 +63,53 @@ async function registrarInscripcion(datos, db = obtenerFirestore()) {
   });
 }
 
-module.exports = { listarConciertos, registrarInscripcion };
+async function crearConcierto(datos, db = obtenerFirestore()) {
+  const coleccion = db.collection('conciertos');
+  return db.runTransaction(async (transaccion) => {
+    // Los IDs son enteros: se toma el mayor existente + 1 dentro de la transacción.
+    const existentes = await transaccion.get(coleccion.select());
+    const maximo = existentes.docs.reduce((m, d) => Math.max(m, Number(d.id) || 0), 0);
+    const id = maximo + 1;
+    const nuevo = { ...datos, cuposDisponibles: datos.cupoTotal };
+    transaccion.create(coleccion.doc(String(id)), nuevo);
+    return { id, ...nuevo };
+  });
+}
+
+async function actualizarConcierto(id, datos, db = obtenerFirestore()) {
+  const ref = db.collection('conciertos').doc(String(id));
+  return db.runTransaction(async (transaccion) => {
+    const documento = await transaccion.get(ref);
+    if (!documento.exists) throw new ErrorAplicacion(404, 'Concierto no encontrado.');
+    const actual = convertirConcierto(documento);
+    // Los inscritos se conservan: solo se recalculan los cupos libres.
+    const inscritos = actual.cupoTotal - actual.cuposDisponibles;
+    if (datos.cupoTotal < inscritos) {
+      throw new ErrorAplicacion(409,
+        `No puedes bajar el cupo total a ${datos.cupoTotal}: ya hay ${inscritos} inscritos.`);
+    }
+    const cambios = { ...datos, cuposDisponibles: datos.cupoTotal - inscritos };
+    transaccion.update(ref, cambios);
+    return { id, ...cambios };
+  });
+}
+
+async function eliminarConcierto(id, db = obtenerFirestore()) {
+  const ref = db.collection('conciertos').doc(String(id));
+  await db.runTransaction(async (transaccion) => {
+    const documento = await transaccion.get(ref);
+    if (!documento.exists) throw new ErrorAplicacion(404, 'Concierto no encontrado.');
+    const actual = convertirConcierto(documento);
+    const inscritos = actual.cupoTotal - actual.cuposDisponibles;
+    if (inscritos > 0) {
+      throw new ErrorAplicacion(409,
+        `No se puede eliminar: el concierto tiene ${inscritos} inscritos.`);
+    }
+    transaccion.delete(ref);
+  });
+}
+
+module.exports = {
+  listarConciertos, registrarInscripcion,
+  crearConcierto, actualizarConcierto, eliminarConcierto
+};

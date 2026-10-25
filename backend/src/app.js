@@ -3,13 +3,14 @@ const path = require('node:path');
 const repositorio = require('./repositories/conciertos.repository');
 const { crearServicio } = require('./services/conciertos.service');
 const { crearRutas } = require('./routes/api');
+const { crearServicioAuth } = require('./services/auth.service');
 const { ErrorAplicacion } = require('./services/error-aplicacion');
 
-function crearApp(servicio = crearServicio(repositorio)) {
+function crearApp(servicio = crearServicio(repositorio), servicioAuth = crearServicioAuth()) {
   const app = express();
   app.disable('x-powered-by');
   app.use(express.json({ limit: '10kb' }));
-  app.use('/api', crearRutas(servicio));
+  app.use('/api', crearRutas(servicio, servicioAuth));
   app.use('/api', (req, res) => {
     res.status(404).json({ ok: false, mensaje: 'Ruta no encontrada.' });
   });
