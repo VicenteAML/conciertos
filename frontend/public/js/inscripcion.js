@@ -16,8 +16,8 @@ async function cargarConcierto() {
   }
 
   detalle.innerHTML = `
-    <h2>${c.artista}</h2>
-    ${datosConcierto(c)}`;
+  <h2>${escaparHtml(c.artista)}</h2>
+  ${datosConcierto(c)}`;
 }
 
 // 2. Al enviar: valida en la página y luego manda los datos al servidor

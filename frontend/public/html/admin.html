@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administración | ConciertosYa</title>
+    <link rel="stylesheet" href="../css/estilos.css">
+    <link rel="icon" type="image/png" href="../img/logo.png">
+</head>
+
+<body>
+    <header class="encabezado">
+        <a class="logo" href="../index.html"><img src="../img/logo.svg" alt="Onda de sonido"> ConciertosYa</a>
+        <nav>
+            <a href="../index.html">Cartelera</a>
+            <a href="mis-inscripciones.html">Mis inscripciones</a>
+            <a href="admin.html" class="activo">Admin</a>
+        </nav>
+    </header>
+
+    <main class="contenedor">
+        <h1>Administración</h1>
+        <p class="subtitulo">Crea, edita y elimina los conciertos de la cartelera.</p>
+
+        <!-- 1. Inicio de sesión (se muestra si no hay sesión activa) -->
+        <section id="panel-login" class="tarjeta login" hidden>
+            <h2>Iniciar sesión</h2>
+            <form id="form-login" class="formulario" novalidate>
+                <label for="usuario">Usuario</label>
+                <input id="usuario" name="usuario" type="text" autocomplete="username">
+
+                <label for="password">Contraseña</label>
+                <input id="password" name="password" type="password" autocomplete="current-password">
+
+                <button type="submit" class="boton">Ingresar</button>
+            </form>
+        </section>
+
+        <!-- 2. Panel del administrador (se muestra con sesión activa) -->
+        <section id="panel-admin" hidden>
+            <div class="barra-admin">
+                <button id="btn-nuevo" type="button" class="boton">+ Nuevo concierto</button>
+                <button id="btn-salir" type="button" class="boton secundario">Cerrar sesión</button>
+            </div>
+
+            <!-- Formulario compartido para crear y editar -->
+            <section id="tarjeta-form" class="tarjeta" hidden>
+                <h2 id="titulo-form">Nuevo concierto</h2>
+                <form id="form-concierto" class="formulario" novalidate>
+                    <label for="artista">Artista</label>
+                    <input id="artista" name="artista" type="text" maxlength="120" placeholder="Ej: Los Bunkers">
+
+                    <label for="fecha">Fecha y hora</label>
+                    <input id="fecha" name="fecha" type="datetime-local">
+
+                    <label for="lugar">Lugar</label>
+                    <input id="lugar" name="lugar" type="text" maxlength="160"
+                        placeholder="Ej: Movistar Arena, Santiago">
+
+                    <label for="cupoTotal">Cupo total</label>
+                    <input id="cupoTotal" name="cupoTotal" type="number" min="1" step="1" placeholder="Ej: 120">
+
+                    <div class="fila-botones">
+                        <button type="submit" class="boton">Guardar</button>
+                        <button type="button" id="btn-cancelar" class="boton secundario">Cancelar</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Lista de conciertos (admin.js la dibuja) -->
+            <div class="tabla-contenedor">
+                <table class="tabla">
+                    <thead>
+                        <tr>
+                            <th>Artista</th>
+                            <th>Fecha</th>
+                            <th>Lugar</th>
+                            <th>Cupos</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-conciertos">
+                        <tr>
+                            <td colspan="5" class="vacio">Cargando conciertos...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <p id="mensaje"></p>
+    </main>
+
+    <footer class="pie">Proyecto Arquitectura de Sistemas · Inscripción a eventos</footer>
+
+    <script src="../js/comun.js"></script>
+    <script src="../js/admin.js"></script>
+</body>
+
+</html>

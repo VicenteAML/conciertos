@@ -224,3 +224,27 @@ h1::after { content: "."; color: var(--rosa); } /* detalle rosa */
   .encabezado nav a { margin: 0 10px; }
   h1 { font-size: 1.8rem; }
 }
+
+
+/* Sin esto, reglas como ".formulario { display: flex }" ganan y el elemento no se oculta. */
+[hidden] { display: none !important; }
+
+.tarjeta.login { max-width: 420px; }
+.barra-admin { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
+.fila-botones { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.boton.secundario { background: transparent; color: var(--blanco); border: 1px solid var(--borde); }
+.boton.secundario:hover { background: var(--blanco); color: var(--negro); }
+.boton.peligro { background: transparent; color: var(--rojo); border: 1px solid var(--rojo); }
+.boton.peligro:hover { background: var(--rojo); color: var(--blanco); }
+.boton.chico { margin-top: 0; padding: 7px 12px; font-size: 0.75rem; }
+
+.formulario input[type="datetime-local"],
+.formulario input[type="number"] { color-scheme: dark; }
+
+.tabla-contenedor { overflow-x: auto; }
+.tabla { width: 100%; border-collapse: collapse; }
+.tabla th, .tabla td { text-align: left; padding: 12px 10px; border-bottom: 1px solid var(--borde); font-size: 0.95rem; }
+.tabla th { color: var(--gris); font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; font-weight: 400; }
+.tabla tbody tr:hover { background: var(--negro-2); }
+.tabla .acciones { display: flex; gap: 8px; flex-wrap: wrap; }

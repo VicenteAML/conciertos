@@ -29,11 +29,11 @@ function mostrarConciertos(listaConciertos) {
     let accion;
     if (yaPaso) accion = '<span class="estado">Finalizado</span>';
     else if (agotado) accion = '<span class="estado agotado">Agotado</span>';
-    else accion = `<a class="boton" href="inscripcion.html?id=${c.id}">Inscribirme</a>`;
+    else accion = `<a class="boton" href="html/inscripcion.html?id=${c.id}">Inscribirme</a>`;
 
     return `
       <article class="tarjeta">
-        <h2>${c.artista}</h2>
+        <h2>${escaparHtml(c.artista)}</h2>
         ${datosConcierto(c)}
         ${accion}
       </article>`;

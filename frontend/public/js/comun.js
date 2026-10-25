@@ -22,6 +22,13 @@ async function obtenerConciertos() {
   }
 }
 
+// Evita que texto escrito por el admin (ej: "<script>") se ejecute como HTML.
+function escaparHtml(texto) {
+  return String(texto).replace(/[&<>"']/g, (c) => (
+    { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]
+  ));
+}
+
 // Convierte "2026-12-05T21:00" en "5 de diciembre de 2026, 21:00"
 function formatearFecha(fechaTexto) {
   return new Date(fechaTexto).toLocaleString("es-CL", { dateStyle: "long", timeStyle: "short" });
@@ -36,7 +43,7 @@ function datosConcierto(c) {
     <div class="datos">
       <div class="dato"><span>Fecha</span><strong>${fecha}</strong></div>
       <div class="dato"><span>Hora</span><strong>${hora}</strong></div>
-      <div class="dato ancho"><span>Lugar</span><strong>${c.lugar}</strong></div>
+      <div class="dato ancho"><span>Lugar</span><strong>${escaparHtml(c.lugar)}</strong></div>
       <div class="dato ancho"><span>Cupos disponibles</span><strong class="amarillo">${c.cuposDisponibles}</strong> <small>de ${c.cupoTotal}</small></div>
     </div>`;
 }
