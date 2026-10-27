@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis inscripciones | ConciertosYa</title>
+    <link rel="stylesheet" href="../css/estilos.css">
+    <link rel="icon" type="image/png" href="../img/logo.png">
+</head>
+
+<body>
+    <header class="encabezado">
+        <a class="logo" href="../index.html"><img src="../img/logo.svg" alt="Onda de sonido"> ConciertosYa</a>
+        <nav>
+            <a href="../index.html">Cartelera</a>
+            <a href="mis-inscripciones.html" class="activo">Mis inscripciones</a>
+            <a href="admin.html">Admin</a>
+        </nav>
+    </header>
+
+    <main class="contenedor angosto">
+        <a class="volver" href="../index.html">← Volver a la cartelera</a>
+        <h1>Mis inscripciones</h1>
+        <p class="subtitulo">Ingresa tu RUT y el correo con el que te inscribiste.</p>
+
+        <form id="form-consulta" class="formulario" novalidate>
+            <label for="rut">RUT</label>
+            <input id="rut" name="rut" type="text" placeholder="Ej: 12345678-5">
+
+            <label for="correo">Correo</label>
+            <input id="correo" name="correo" type="email" placeholder="Ej: ana@mail.com">
+
+            <button type="submit" class="boton">Buscar mis inscripciones</button>
+        </form>
+
+        <p id="mensaje"></p>
+
+        <!-- mis-inscripciones.js dibuja aquí las tarjetas -->
+        <section id="resultados"></section>
+    </main>
+
+    <footer class="pie">Proyecto Arquitectura de Sistemas · Inscripción a eventos</footer>
+
+    <script src="../js/config.js"></script>
+    <script src="../js/comun.js"></script>
+    <script src="../js/mis-inscripciones.js"></script>
+</body>
+
+</html>

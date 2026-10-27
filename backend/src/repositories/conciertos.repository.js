@@ -109,7 +109,32 @@ async function eliminarConcierto(id, db = obtenerFirestore()) {
   });
 }
 
+async function buscarInscripciones({ rut, correo }, db = obtenerFirestore()) {
+  const resultado = await db.collection('inscripciones').where('rut', '==', rut).get();
+  // También se exige el correo: conocer solo un RUT no basta para ver datos ajenos.
+  const propias = resultado.docs.map(d => d.data()).filter(i => i.correo === correo);
+  if (propias.length === 0) return [];
+
+  const referencias = propias.map(i => db.collection('conciertos').doc(String(i.conciertoId)));
+  const conciertos = await db.getAll(...referencias);
+  return propias
+    .map((inscripcion, indice) => {
+      if (!conciertos[indice].exists) return null;
+      const concierto = convertirConcierto(conciertos[indice]);
+      return {
+        conciertoId: concierto.id,
+        artista: concierto.artista,
+        fecha: concierto.fecha,
+        lugar: concierto.lugar,
+        inscritoEn: typeof inscripcion.creadaEn?.toDate === 'function'
+          ? inscripcion.creadaEn.toDate().toISOString() : null
+      };
+    })
+    .filter(Boolean)
+    .sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+}
+
 module.exports = {
-  listarConciertos, registrarInscripcion,
+  listarConciertos, registrarInscripcion, buscarInscripciones,
   crearConcierto, actualizarConcierto, eliminarConcierto
 };

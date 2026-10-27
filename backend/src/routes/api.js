@@ -11,6 +11,7 @@ function crearRutas(servicio, servicioAuth) {
   // ----- Públicas -----
   rutas.get('/conciertos', controlador.listar);
   rutas.post('/inscripciones', controlador.inscribir);
+  rutas.post('/mis-inscripciones', controlador.misInscripciones);
   rutas.post('/auth/login', auth.login);
 
   // ----- Administrador (requieren token) -----

@@ -56,6 +56,23 @@ function crearServicio(repositorio) {
       await repositorio.eliminarConcierto(validarId(id));
       return { ok: true, mensaje: 'Concierto eliminado.' };
     },
+
+    async misInscripciones(entrada) {
+      const { rut, correo } = entrada || {};
+      const rutNormalizado = typeof rut === 'string'
+        ? rut.trim().replace(/\./g, '').toUpperCase() : '';
+      if (!rutValido(rutNormalizado)) {
+        throw new ErrorAplicacion(400, 'Ingresa un RUT válido, incluyendo su dígito verificador.');
+      }
+      if (typeof correo !== 'string' || correo.trim().length > 254 || !/^\S+@\S+\.\S+$/.test(correo.trim())) {
+        throw new ErrorAplicacion(400, 'Ingresa un correo válido.');
+      }
+      const datos = await repositorio.buscarInscripciones({
+        rut: rutNormalizado, correo: correo.trim().toLowerCase()
+      });
+      return { ok: true, datos };
+    },
+
     async inscribir(entrada) {
       const { conciertoId, nombre, rut, correo } = entrada || {};
       if (!Number.isSafeInteger(conciertoId) || conciertoId <= 0) {

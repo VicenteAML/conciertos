@@ -6,7 +6,9 @@ function crearControlador(servicio) {
     async inscribir(req, res) {
       res.status(201).json(await servicio.inscribir(req.body));
     },
-
+    async misInscripciones(req, res) {
+      res.json(await servicio.misInscripciones(req.body));
+    },
     async crear(req, res) {
       res.status(201).json({ ok: true, datos: await servicio.crearConcierto(req.body) });
     },
