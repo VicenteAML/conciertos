@@ -44,7 +44,7 @@ formulario.addEventListener("submit", async (evento) => {
 
   try {
     // Aquí termina mi parte: se envía al backend (POST /api/inscripciones)
-    const respuesta = await fetch("/api/inscripciones", {
+    const respuesta = await fetch(urlApi("/api/inscripciones"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ conciertoId: idConcierto, nombre, rut, correo })

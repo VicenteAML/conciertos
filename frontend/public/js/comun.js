@@ -1,5 +1,10 @@
 // ===== Funciones que comparten las páginas =====
 
+function urlApi(ruta) {
+  const base = window.CONFIG_CONCIERTOS?.apiBaseUrl || window.location.origin;
+  return new URL(ruta, base).href;
+}
+
 // Datos de prueba: se usan SOLO si el servidor (backend) todavía no está listo.
 const CONCIERTOS_PRUEBA = [
   { id: 1, artista: "Los Bunkers", fecha: "2026-12-05T21:00", lugar: "Movistar Arena, Santiago", cupoTotal: 120, cuposDisponibles: 35 },
@@ -13,7 +18,7 @@ const CONCIERTOS_PRUEBA = [
 // Pide los conciertos al servidor. Si no responde, usa los datos de prueba.
 async function obtenerConciertos() {
   try {
-    const respuesta = await fetch("/api/conciertos");
+    const respuesta = await fetch(urlApi("/api/conciertos"));
     const json = await respuesta.json();
     if (json.ok) return { conciertos: json.datos, modoPrueba: false };
     throw new Error(json.mensaje);

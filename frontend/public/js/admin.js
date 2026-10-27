@@ -24,7 +24,7 @@ function limpiarMensaje() {
 async function api(ruta, opciones = {}) {
   const token = obtenerToken();
   try {
-    const respuesta = await fetch(ruta, {
+    const respuesta = await fetch(urlApi(ruta), {
       ...opciones,
       headers: { "Content-Type": "application/json", ...(token && { Authorization: "Bearer " + token }) }
     });

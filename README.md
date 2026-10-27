@@ -25,7 +25,7 @@ La interfaz existente está en `frontend/public`. Las rutas relativas de HTML,
 CSS, imágenes y JavaScript se mantienen.
 
 Configura `frontend/public` como directorio público del servidor o del servicio
-de alojamiento. La interfaz espera estas rutas en el mismo origen:
+de alojamiento. La interfaz utiliza estas rutas de la API:
 
 - `GET /api/conciertos`: devuelve `{ ok: true, datos: [...] }`.
 - `POST /api/inscripciones`: recibe `{ conciertoId, nombre, rut, correo }`
@@ -123,9 +123,9 @@ Desde la raíz, donde está `package.json`:
 npm start
 ```
 
-Abre [http://localhost:3000](http://localhost:3000). No abras el HTML directamente
-ni uses otro servidor para el frontend, porque las rutas `/api` deben llegar al
-backend. `npm run dev` reinicia Node al cambiar archivos y `npm test` ejecuta
+Abre [http://localhost:3000](http://localhost:3000). También puedes servir el
+frontend con IIS siguiendo la sección siguiente. No abras el HTML directamente.
+`npm run dev` reinicia Node al cambiar archivos y `npm test` ejecuta
 pruebas locales con dobles de Firestore, sin acceder a una base real.
 
 Si ves conciertos de prueba, la consulta real a Firestore falló; revisa la
@@ -139,10 +139,44 @@ Puedes copiarlas en la pestaña Reglas de Firestore y publicarlas. El archivo po
 sí solo no cambia las reglas del proyecto. Firebase Admin utiliza permisos IAM y
 no está limitado por estas reglas.
 
-El servidor está configurado para desarrollo local en `127.0.0.1`. Antes de
-publicarlo en Internet, configura HTTPS, una identidad con permisos mínimos y
-protección contra abuso para el formulario público. Esta implementación no
-incluye autenticación de usuarios ni despliegue serverless.
+La dirección de escucha se configura con `HOST`. El valor predeterminado si no
+se configura es `127.0.0.1`; `.env.example` usa `0.0.0.0` para el despliegue con
+IIS y API en puertos separados. Antes de publicar datos personales o usar el
+login de administrador en Internet, configura HTTPS para frontend y API. Esta
+implementación no incluye despliegue serverless.
+
+## IIS sin extensiones de proxy
+
+1. Copia los archivos actualizados del frontend y backend a la VM. En IIS apunta
+   la ruta física únicamente a `frontend/public` y habilita `index.html` como
+   documento predeterminado. No publiques la raíz del proyecto.
+2. Conserva las credenciales de la VM y añade a `backend/.env`:
+
+   ```env
+   PORT=3000
+   HOST=0.0.0.0
+   CORS_ORIGINS=http://68.211.89.17,http://localhost,http://127.0.0.1
+   ```
+
+   Si cambias la IP, el dominio o el puerto de IIS, actualiza `CORS_ORIGINS` con
+   el origen exacto (protocolo, nombre/IP y puerto no estándar), sin barra final.
+   CORS no reemplaza la autenticación del administrador.
+3. Reinicia Node o la tarea programada que lo ejecuta. Permite tráfico TCP
+   entrante al puerto 3000 en el Firewall de Windows y en la red del proveedor de
+   la VM; IIS seguirá recibiendo el frontend en el puerto 80.
+4. Desde otro equipo comprueba `http://68.211.89.17:3000/api/conciertos` y luego
+   abre `http://68.211.89.17`. Recarga sin caché (Ctrl+F5).
+
+`frontend/public/js/config.js` dirige la API al puerto 3000 del mismo nombre o IP
+con el que el visitante abrió el sitio. No usa `localhost` fijo. Las peticiones
+de cartelera, inscripción y administración comparten esta configuración. Si la
+API tiene otra URL, cambia `apiBaseUrl` en ese archivo. En el desarrollo local
+por Node sigue funcionando `http://localhost:3000`.
+
+Este ejemplo usa HTTP. Si IIS usa HTTPS, la API también necesita HTTPS con un
+certificado válido y su URL debe configurarse en `config.js`; Node no incorpora
+TLS automáticamente al cambiar el protocolo. El navegador bloquea las consultas
+HTTP desde una página HTTPS. Referencia: [CORS en MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS).
 
 La revisión de dependencias detectó ocho avisos moderados heredados de
 Firebase Admin 13 y su dependencia transitiva `uuid`, sin avisos altos ni

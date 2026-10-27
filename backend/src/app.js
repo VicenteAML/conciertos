@@ -5,10 +5,12 @@ const { crearServicio } = require('./services/conciertos.service');
 const { crearRutas } = require('./routes/api');
 const { crearServicioAuth } = require('./services/auth.service');
 const { ErrorAplicacion } = require('./services/error-aplicacion');
+const { crearCors } = require('./middlewares/cors');
 
-function crearApp(servicio = crearServicio(repositorio), servicioAuth = crearServicioAuth()) {
+function crearApp(servicio = crearServicio(repositorio), servicioAuth = crearServicioAuth(), opciones = {}) {
   const app = express();
   app.disable('x-powered-by');
+  app.use('/api', crearCors(opciones.origenesPermitidos ?? process.env.CORS_ORIGINS ?? ''));
   app.use(express.json({ limit: '10kb' }));
   app.use('/api', crearRutas(servicio, servicioAuth));
   app.use('/api', (req, res) => {
